@@ -14,16 +14,16 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
-        primaryStage.setTitle("Hello World");
-        primaryStage.setScene(new Scene(root, 300, 275));
+        Parent root = FXMLLoader.load(getClass().getResource("resources/home.fxml"));
+        primaryStage.setTitle("Matrix Generator");
+        primaryStage.setScene(new Scene(root, 1060, 720));
         primaryStage.show();
     }
 
 
     public static void main(String[] args) {
-        //launch(args);
-        testDrawMatrixInConsole();
+        launch(args);
+        //testDrawMatrixInConsole();
     }
 
     private static void testDrawMatrixInConsole(){

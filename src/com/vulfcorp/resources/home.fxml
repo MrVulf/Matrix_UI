@@ -28,7 +28,7 @@
                   <Font name="Arial" size="20.0" />
                </font>
             </Button>
-            <Button fx:id="sparseMtrixButton" layoutX="381.0" layoutY="25.0" mnemonicParsing="false" prefHeight="74.0" prefWidth="298.0" text="Generate Sparse Matrix">
+            <Button fx:id="sparseMatrixButton" layoutX="381.0" layoutY="25.0" mnemonicParsing="false" prefHeight="74.0" prefWidth="298.0" text="Generate Sparse Matrix">
                <font>
                   <Font name="Arial" size="20.0" />
                </font>

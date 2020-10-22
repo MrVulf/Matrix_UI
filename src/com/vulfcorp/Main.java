@@ -34,10 +34,10 @@ public class Main extends Application {
         InitiatorMatrix.FillMatrix(spareMatrix, 10, 99);
 
 
-        normalMatrix.Draw(ConsoleMatrixDrawer.getDrawerWithBorder());
-        spareMatrix.Draw(ConsoleMatrixDrawer.getDrawerWithBorder());
+        normalMatrix.draw(ConsoleMatrixDrawer.getDrawerWithBorder());
+        spareMatrix.draw(ConsoleMatrixDrawer.getDrawerWithBorder());
         System.out.println("\n");
-        normalMatrix.Draw(ConsoleMatrixDrawer.getDrawerWithoutBorder());
-        spareMatrix.Draw(ConsoleMatrixDrawer.getDrawerWithoutBorder());
+        normalMatrix.draw(ConsoleMatrixDrawer.getDrawerWithoutBorder());
+        spareMatrix.draw(ConsoleMatrixDrawer.getDrawerWithoutBorder());
     }
 }

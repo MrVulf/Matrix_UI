@@ -5,6 +5,6 @@ public interface IMatrix {
     int readRecord (int line, int column);
     int getLineCount();
     int getColumnCount();
-    void Draw(IMatrixDrawer drawer);
+    void draw(IMatrixDrawer drawer);
     String getElementForDrawing(int i, int j);
 }

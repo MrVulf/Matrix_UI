@@ -18,7 +18,7 @@ public abstract class AbstractMatrix implements IMatrix {
     }
 
     @Override
-    public void Draw(IMatrixDrawer drawer) {
+    public void draw(IMatrixDrawer drawer) {
         drawer.drawMatrix(this);
     }
 

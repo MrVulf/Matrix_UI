@@ -33,20 +33,15 @@ public class HomeController implements IMatrixViewer {
 
     private HomeController thisController = this;
 
+    private IMatrix matrix;
+
     @FXML
     void initialize(){
         normalMatrixButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-               IMatrix matrix = InitiatorMatrix.FillMatrix(new NormalMatrix(5,5),15,10);
-               if(borderCheckBox.isSelected()) {
-                   matrix.draw(new UIMatrixDrawer(true, thisController));
-                   matrix.draw(ConsoleMatrixDrawer.getDrawerWithBorder());
-               }
-                else {
-                   matrix.draw(new UIMatrixDrawer(false, thisController));
-                   matrix.draw(ConsoleMatrixDrawer.getDrawerWithoutBorder());
-               }
+                matrix = InitiatorMatrix.FillMatrix(new NormalMatrix(5,5),15,10);
+                setViewInUI();
             }
 
         });
@@ -54,7 +49,7 @@ public class HomeController implements IMatrixViewer {
         sparseMatrixButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-                IMatrix matrix = InitiatorMatrix.FillMatrix(new SpareMatrix(5,5),10,10);
+                matrix = InitiatorMatrix.FillMatrix(new SpareMatrix(5,5),10,10);
                 if(borderCheckBox.isSelected()) {
                     matrix.draw(new UIMatrixDrawer(true, thisController));
                     matrix.draw(ConsoleMatrixDrawer.getDrawerWithBorder());
@@ -69,6 +64,29 @@ public class HomeController implements IMatrixViewer {
 
         borderCheckBox.fire();
 
+        borderCheckBox.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                setViewInUI();
+            }
+        });
+
+    }
+
+    private void setViewInUI(){
+        if(matrix == null){
+            consoleTextArea.clear();
+            consoleTextArea.appendText("matrix wasn't generate yet");
+            return;
+        }
+        if(borderCheckBox.isSelected()) {
+            matrix.draw(new UIMatrixDrawer(true, thisController));
+            matrix.draw(ConsoleMatrixDrawer.getDrawerWithBorder());
+        }
+        else {
+            matrix.draw(new UIMatrixDrawer(false, thisController));
+            matrix.draw(ConsoleMatrixDrawer.getDrawerWithoutBorder());
+        }
     }
 
     @Override

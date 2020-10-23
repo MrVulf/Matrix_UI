@@ -9,7 +9,6 @@ import com.vulfcorp.interfaces.IMatrixViewer;
 import com.vulfcorp.tools.InitiatorMatrix;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.scene.SubScene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextArea;
@@ -27,9 +26,6 @@ public class HomeController implements IMatrixViewer {
 
     @FXML
     private TextArea consoleTextArea;
-
-    @FXML
-    private SubScene uiSubScene;
 
     private HomeController thisController = this;
 

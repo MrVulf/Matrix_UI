@@ -1,5 +1,6 @@
 package com.vulfcorp.controllers;
 
+import com.vulfcorp.decorators.MatrixDecorator;
 import com.vulfcorp.impl.ConsoleMatrixDrawer;
 import com.vulfcorp.impl.NormalMatrix;
 import com.vulfcorp.impl.SpareMatrix;
@@ -9,9 +10,8 @@ import com.vulfcorp.interfaces.IMatrixViewer;
 import com.vulfcorp.tools.InitiatorMatrix;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.TextArea;
+import javafx.scene.control.*;
+import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 
 public class HomeController implements IMatrixViewer {
@@ -27,16 +27,24 @@ public class HomeController implements IMatrixViewer {
     @FXML
     private TextArea consoleTextArea;
 
+    @FXML
+    private Button renumberRowsAndColumnsButton;
+
+    @FXML
+    private Button redecorateToDefaultButton;
+
+
     private HomeController thisController = this;
 
-    private IMatrix matrix;
+    private MatrixDecorator matrix;
 
     @FXML
     void initialize(){
         normalMatrixButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-                matrix = InitiatorMatrix.FillMatrix(new NormalMatrix(5,5),15,10);
+                IMatrix nMatrix = InitiatorMatrix.FillMatrix(new NormalMatrix(5,5),15,10);
+                matrix = new MatrixDecorator(nMatrix);
                 setViewInUI();
             }
 
@@ -45,17 +53,44 @@ public class HomeController implements IMatrixViewer {
         sparseMatrixButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-                matrix = InitiatorMatrix.FillMatrix(new SpareMatrix(5,5),10,10);
-                if(borderCheckBox.isSelected()) {
-                    matrix.draw(new UIMatrixDrawer(true, thisController));
-                    matrix.draw(ConsoleMatrixDrawer.getDrawerWithBorder());
-                }
-                else {
-                    matrix.draw(new UIMatrixDrawer(false, thisController));
-                    matrix.draw(ConsoleMatrixDrawer.getDrawerWithoutBorder());
-                }
+                IMatrix nMatrix = InitiatorMatrix.FillMatrix(new SpareMatrix(5,5),10,10);
+                matrix = new MatrixDecorator(nMatrix);
+                setViewInUI();
             }
 
+        });
+
+        renumberRowsAndColumnsButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>(){
+            @Override
+            public void handle(MouseEvent event) {
+                if (matrix != null) {
+                    int columnCount = matrix.getColumnCount();
+                    int lineCount = matrix.getLineCount();
+
+                    int column1 = (int) (Math.random() * (columnCount));
+                    int column2 = (int) (Math.random() * (columnCount));
+                    int line1 = (int) (Math.random() * (lineCount));
+                    int line2 = (int) (Math.random() * (lineCount));
+
+                    matrix.swapLines(line1, line2);
+                    matrix.swapColumn(column1, column2);
+
+                    ShowAlert("RENUMBER EVENT", "swap columns (" + column1 + "," + column2 +
+                            "), rows (" + line1 + "," + line2 + ")");
+
+                    setViewInUI();
+                } else{
+                    ShowAlert("MATRIX EVENT", "MATRIX WASN'T GENERATED");
+                }
+            }
+        });
+
+        redecorateToDefaultButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>(){
+            @Override
+            public void handle(MouseEvent event) {
+                matrix.decorateByDefault();
+                setViewInUI();
+            }
         });
 
         borderCheckBox.fire();
@@ -83,6 +118,18 @@ public class HomeController implements IMatrixViewer {
             matrix.draw(new UIMatrixDrawer(false, thisController));
             matrix.draw(ConsoleMatrixDrawer.getDrawerWithoutBorder());
         }
+    }
+
+    private void ShowAlert(String header, String info){
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Message");
+        alert.setHeaderText(header);
+        alert.setContentText(info);
+        alert.showAndWait().ifPresent(rs -> {
+            if (rs == ButtonType.OK) {
+                System.out.println(info);
+            }
+        });
     }
 
     @Override

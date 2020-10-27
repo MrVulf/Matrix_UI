@@ -29,8 +29,10 @@ public class MatrixDecorator implements IMatrix {
 
     public void swapColumn(int firstColumn, int secondColumn){
         if(isColumnNumberCorrect(firstColumn) && isColumnNumberCorrect(secondColumn)) {
-            columnsMap.put(firstColumn, secondColumn);
-            columnsMap.put(secondColumn, firstColumn);
+            int firstKey = columnsMap.get(firstColumn);
+            int secondKey = columnsMap.get(secondColumn);
+            columnsMap.put(firstColumn, secondKey);
+            columnsMap.put(secondColumn, firstKey);
         } else {
             throw new IllegalArgumentException("FirstColumn = "+firstColumn+" SecondColumn = "+secondColumn+" are not correct");
         }
@@ -38,8 +40,10 @@ public class MatrixDecorator implements IMatrix {
 
     public void swapLines(int firstLine, int secondLine){
         if(isLineNumberCorrect(firstLine) && isLineNumberCorrect(secondLine)) {
-            linesMap.put(firstLine, secondLine);
-            linesMap.put(secondLine, firstLine);
+            int firstKey = columnsMap.get(firstLine);
+            int secondKey = columnsMap.get(secondLine);
+            linesMap.put(firstLine, secondKey);
+            linesMap.put(secondLine, firstKey);
         } else {
             throw new IllegalArgumentException("FirstLine = "+firstLine+" SecondLine = "+secondLine+" are not correct");
         }

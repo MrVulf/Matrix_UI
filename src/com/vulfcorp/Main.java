@@ -1,5 +1,6 @@
 package com.vulfcorp;
 
+import com.vulfcorp.decorators.MatrixDecorator;
 import com.vulfcorp.impl.ConsoleMatrixDrawer;
 import com.vulfcorp.impl.NormalMatrix;
 import com.vulfcorp.impl.SpareMatrix;
@@ -24,6 +25,7 @@ public class Main extends Application {
     public static void main(String[] args) {
         launch(args);
         //testDrawMatrixInConsole();
+        //testMatrixDecorator();
     }
 
     private static void testDrawMatrixInConsole(){
@@ -39,5 +41,18 @@ public class Main extends Application {
         System.out.println("\n");
         normalMatrix.draw(ConsoleMatrixDrawer.getDrawerWithoutBorder());
         spareMatrix.draw(ConsoleMatrixDrawer.getDrawerWithoutBorder());
+    }
+
+    private static void testMatrixDecorator(){
+        NormalMatrix normalMatrix = new NormalMatrix(5, 5);
+
+        InitiatorMatrix.FillMatrix(normalMatrix, 15, 99);
+
+        MatrixDecorator normalDecorator = new MatrixDecorator(normalMatrix);
+        normalDecorator.swapColumn(2,3);
+        normalDecorator.swapLines(0,2);
+
+        normalMatrix.draw(ConsoleMatrixDrawer.getDrawerWithBorder());
+        normalDecorator.draw(ConsoleMatrixDrawer.getDrawerWithBorder());
     }
 }

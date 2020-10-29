@@ -11,7 +11,6 @@ import com.vulfcorp.tools.InitiatorMatrix;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 
 public class HomeController implements IMatrixViewer {

@@ -5,12 +5,12 @@ import com.vulfcorp.interfaces.IVector;
 import java.util.HashMap;
 import java.util.Map;
 
-public class SpareVector implements IVector {
+public class SparseVector implements IVector {
 
     private Map<Integer,Integer> vector;
     private int size;
 
-    public SpareVector(int size) {
+    public SparseVector(int size) {
         if(size > 0) {
             this.size=size;
             vector = new HashMap<>();

@@ -3,7 +3,7 @@ package com.vulfcorp.controllers;
 import com.vulfcorp.decorators.MatrixDecorator;
 import com.vulfcorp.impl.ConsoleMatrixDrawer;
 import com.vulfcorp.impl.NormalMatrix;
-import com.vulfcorp.impl.SpareMatrix;
+import com.vulfcorp.impl.SparseMatrix;
 import com.vulfcorp.impl.UIMatrixDrawer;
 import com.vulfcorp.interfaces.IMatrix;
 import com.vulfcorp.interfaces.IMatrixViewer;
@@ -52,7 +52,7 @@ public class HomeController implements IMatrixViewer {
         sparseMatrixButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-                IMatrix nMatrix = InitiatorMatrix.FillMatrix(new SpareMatrix(5,5),10,10);
+                IMatrix nMatrix = InitiatorMatrix.FillMatrix(new SparseMatrix(5,5),10,10);
                 matrix = new MatrixDecorator(nMatrix);
                 setViewInUI();
             }

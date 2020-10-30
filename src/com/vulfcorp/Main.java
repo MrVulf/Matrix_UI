@@ -3,7 +3,7 @@ package com.vulfcorp;
 import com.vulfcorp.decorators.MatrixDecorator;
 import com.vulfcorp.impl.ConsoleMatrixDrawer;
 import com.vulfcorp.impl.NormalMatrix;
-import com.vulfcorp.impl.SpareMatrix;
+import com.vulfcorp.impl.SparseMatrix;
 import com.vulfcorp.tools.InitiatorMatrix;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -30,17 +30,17 @@ public class Main extends Application {
 
     private static void testDrawMatrixInConsole(){
         NormalMatrix normalMatrix = new NormalMatrix(5, 5);
-        SpareMatrix  spareMatrix  = new SpareMatrix(5,5);
+        SparseMatrix sparseMatrix = new SparseMatrix(5,5);
 
         InitiatorMatrix.FillMatrix(normalMatrix, 15, 99);
-        InitiatorMatrix.FillMatrix(spareMatrix, 10, 99);
+        InitiatorMatrix.FillMatrix(sparseMatrix, 10, 99);
 
 
         normalMatrix.draw(ConsoleMatrixDrawer.getDrawerWithBorder());
-        spareMatrix.draw(ConsoleMatrixDrawer.getDrawerWithBorder());
+        sparseMatrix.draw(ConsoleMatrixDrawer.getDrawerWithBorder());
         System.out.println("\n");
         normalMatrix.draw(ConsoleMatrixDrawer.getDrawerWithoutBorder());
-        spareMatrix.draw(ConsoleMatrixDrawer.getDrawerWithoutBorder());
+        sparseMatrix.draw(ConsoleMatrixDrawer.getDrawerWithoutBorder());
     }
 
     private static void testMatrixDecorator(){

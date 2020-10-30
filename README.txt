@@ -29,4 +29,13 @@ The strategy of filling in the matrix:
             {* ? 0 ?}       {* ? * ? *}
             {0 ? 0 ?}       {* ? 0 ? 0}
 
-
+The matrix is rendered in HomeController.
+To do this, the button handlers have an algorithm:
+    1) Create a matrix (of the correct type)
+    2) Initializing the matrix using the InitiatorMatrix
+    3) Putting the matrix in the decorator
+    4) Drawing the matrix:
+        a) Checking input conditions from the UI
+        b) Calling the draw method for the matrix (passing the IMatrixDrawer object)
+        c) Delegating the matrix display to the IMatrixDrawer object
+        d) Executing the redefined drawing method

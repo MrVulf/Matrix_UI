@@ -44,15 +44,7 @@ public abstract class AbstractMatrixDrawer implements IMatrixDrawer {
         for(int i = 0; i < lines; i++){
             result.append("\n");
             for(int j = 0; j < column; j++){
-                /*
-                result.append(String.format("%5s|",matrix.getElementForDrawing(i,j)));
-                                        ^--- TextArea incorrect view it
-                */
-                String cNumber = matrix.getElementForDrawing(i,j);
-                for(int space = 0; space < 5-cNumber.length(); space++)
-                    result.append(" ");
-                result.append(cNumber+"|");
-
+                result.append(String.format("%5s ",matrix.getElementForDrawing(i,j)));
             }
         }
 

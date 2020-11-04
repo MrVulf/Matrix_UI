@@ -18,8 +18,4 @@ public class SparseMatrix extends AbstractMatrix {
         fillField(matrix, lineCount, columnCount);
     }
 
-    public String getElementForDrawing(int i, int j) {
-        int value = readRecord(i,j);
-        return (value!=0 ? String.valueOf(value) : " ");
-    }
 }

@@ -4,8 +4,6 @@ import com.vulfcorp.interfaces.IMatrix;
 import com.vulfcorp.interfaces.IMatrixDrawer;
 import com.vulfcorp.interfaces.IVector;
 
-import java.util.ArrayList;
-
 public abstract class AbstractMatrix implements IMatrix {
     private IVector[] matrix;
     private int lineCount;
@@ -34,7 +32,7 @@ public abstract class AbstractMatrix implements IMatrix {
     }
 
     @Override
-    public int readRecord(int line, int column) {
+    public Integer readRecord(int line, int column) {
         if(checkingCorrectnessOfPosition(line,column)){
             return (matrix[line]).readRecord(column);
         }else{
@@ -56,7 +54,7 @@ public abstract class AbstractMatrix implements IMatrix {
 
     private boolean checkingCorrectnessOfPosition(int line, int column){
         boolean s1 = 0<=line && line< lineCount;
-        boolean s2 = 0<=column && column <= columnCount;
+        boolean s2 = 0<=column && column < columnCount;
         return s1 && s2;
     }
 

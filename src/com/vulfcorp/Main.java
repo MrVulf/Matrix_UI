@@ -11,6 +11,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+import java.util.Iterator;
+
 public class Main extends Application {
 
     @Override
@@ -26,6 +28,7 @@ public class Main extends Application {
         launch(args);
         //testDrawMatrixInConsole();
         //testMatrixDecorator();
+        //testMatrixIterator();
     }
 
     private static void testDrawMatrixInConsole(){
@@ -54,5 +57,21 @@ public class Main extends Application {
 
         normalMatrix.draw(ConsoleMatrixDrawer.getDrawerWithBorder());
         normalDecorator.draw(ConsoleMatrixDrawer.getDrawerWithBorder());
+    }
+
+    private static void testMatrixIterator(){
+        NormalMatrix normalMatrix = new NormalMatrix(5, 5);
+        InitiatorMatrix.FillMatrix(normalMatrix, 15, 99);
+        MatrixDecorator normalDecorator = new MatrixDecorator(normalMatrix);
+
+        normalDecorator.swapColumn(2,3);
+        normalDecorator.swapLines(0,2);
+
+        Iterator iterator1 = normalMatrix.getIterator();
+        Iterator iterator2 = normalDecorator.getIterator();
+
+        System.out.println(iterator1.hasNext() + " || " + iterator1.next() +"\n");
+        System.out.println(iterator2.hasNext() + " || " + iterator2.next() +"\n");
+        System.out.println("finish test");
     }
 }

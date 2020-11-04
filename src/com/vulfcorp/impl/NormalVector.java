@@ -2,8 +2,6 @@ package com.vulfcorp.impl;
 
 import com.vulfcorp.interfaces.IVector;
 
-import java.util.Arrays;
-
 public class NormalVector implements IVector {
     private int[] vector;
 
@@ -26,7 +24,7 @@ public class NormalVector implements IVector {
     }
 
     @Override
-    public int readRecord(int position) {
+    public Integer readRecord(int position) {
         if (0 <= position && position < vector.length) {
             return vector[position];
         } else {

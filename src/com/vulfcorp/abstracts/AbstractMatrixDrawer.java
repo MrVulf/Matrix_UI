@@ -3,6 +3,8 @@ package com.vulfcorp.abstracts;
 import com.vulfcorp.interfaces.IMatrix;
 import com.vulfcorp.interfaces.IMatrixDrawer;
 
+import java.util.Iterator;
+
 public abstract class AbstractMatrixDrawer implements IMatrixDrawer {
 
     @Override
@@ -22,13 +24,18 @@ public abstract class AbstractMatrixDrawer implements IMatrixDrawer {
     final protected String drawDefaultMatrixViewWithBorder(IMatrix matrix){
         int column = matrix.getColumnCount();
         int lines = matrix.getLineCount();
+        Iterator<Integer> iterator = matrix.getIterator();
         StringBuilder result = new StringBuilder();
 
         makeDefaultBorderHeader(result, column);
         for(int i = 0; i < lines; i++){
             result.append("\n|");
             for(int j = 0; j < column; j++){
-                result.append(String.format("%5s|",matrix.getElementForDrawing(i,j)));
+                Integer value = iterator.next();
+                if(value == null)
+                    result.append(String.format("%5s|",""));
+                else
+                    result.append(String.format("%5s|",value));
             }
         }
         makeDefaultBorderHeader(result, column);
@@ -39,12 +46,17 @@ public abstract class AbstractMatrixDrawer implements IMatrixDrawer {
     final protected String drawDefaultMatrixViewWithoutBorder(IMatrix matrix){
         int column = matrix.getColumnCount();
         int lines = matrix.getLineCount();
+        Iterator<Integer> iterator = matrix.getIterator();
 
         StringBuilder result = new StringBuilder();
         for(int i = 0; i < lines; i++){
             result.append("\n");
             for(int j = 0; j < column; j++){
-                result.append(String.format("%5s ",matrix.getElementForDrawing(i,j)));
+                Integer value = iterator.next();
+                if(value == null)
+                    result.append(String.format("%5s|",""));
+                else
+                    result.append(String.format("%5s|",value));
             }
         }
 

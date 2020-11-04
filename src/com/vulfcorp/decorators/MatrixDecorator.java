@@ -66,7 +66,7 @@ public class MatrixDecorator implements IMatrix {
     }
 
     @Override
-    public int readRecord(int line, int column) {
+    public Integer readRecord(int line, int column) {
         int newLine = linesMap.get(line);
         int newColumn = columnsMap.get(column);
 
@@ -88,11 +88,4 @@ public class MatrixDecorator implements IMatrix {
         drawer.drawMatrix(this);
     }
 
-    @Override
-    public String getElementForDrawing(int i, int j) {
-        int newLine = linesMap.get(i);
-        int newColumn = columnsMap.get(j);
-
-        return component.getElementForDrawing(newLine, newColumn);
-    }
 }

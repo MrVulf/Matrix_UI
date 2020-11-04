@@ -38,12 +38,12 @@ public class SparseVector implements IVector {
     }
 
     @Override
-    public int readRecord(int position) {
+    public Integer readRecord(int position) {
         if(0 <= position && position < size){
             if(vector.containsKey(position))
                 return vector.get(position);
             else
-                return 0;
+                return null;
         } else {
             throw new IllegalArgumentException("position should be in "+
                     vector.keySet()+" || position="+position);

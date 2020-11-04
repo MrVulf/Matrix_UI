@@ -18,8 +18,4 @@ public class NormalMatrix extends AbstractMatrix {
         fillField(matrix, lineCount, columnCount);
     }
 
-    @Override
-    public String getElementForDrawing(int i, int j) {
-        return String.valueOf(readRecord(i,j));
-    }
 }

@@ -1,6 +1,7 @@
-package com.vulfcorp.impl;
+package com.vulfcorp.impl.matrixs;
 
 import com.vulfcorp.abstracts.AbstractMatrix;
+import com.vulfcorp.impl.vectors.SparseVector;
 import com.vulfcorp.interfaces.IVector;
 
 public class SparseMatrix extends AbstractMatrix {

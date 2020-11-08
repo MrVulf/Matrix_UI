@@ -1,9 +1,9 @@
 package com.vulfcorp;
 
 import com.vulfcorp.decorators.MatrixDecorator;
-import com.vulfcorp.impl.ConsoleMatrixDrawer;
-import com.vulfcorp.impl.NormalMatrix;
-import com.vulfcorp.impl.SparseMatrix;
+import com.vulfcorp.impl.drawers.ConsoleMatrixDrawer;
+import com.vulfcorp.impl.matrixs.NormalMatrix;
+import com.vulfcorp.impl.matrixs.SparseMatrix;
 import com.vulfcorp.tools.InitiatorMatrix;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;

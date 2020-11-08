@@ -1,4 +1,4 @@
-package com.vulfcorp.impl;
+package com.vulfcorp.impl.vectors;
 
 import com.vulfcorp.interfaces.IVector;
 

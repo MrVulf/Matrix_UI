@@ -1,6 +1,7 @@
-package com.vulfcorp.impl;
+package com.vulfcorp.impl.matrixs;
 
 import com.vulfcorp.abstracts.AbstractMatrix;
+import com.vulfcorp.impl.vectors.NormalVector;
 import com.vulfcorp.interfaces.IVector;
 
 public class NormalMatrix extends AbstractMatrix {

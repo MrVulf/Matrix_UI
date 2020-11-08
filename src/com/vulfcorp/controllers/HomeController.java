@@ -2,10 +2,10 @@ package com.vulfcorp.controllers;
 
 import com.vulfcorp.abstracts.AbstractCommand;
 import com.vulfcorp.decorators.MatrixDecorator;
-import com.vulfcorp.impl.ConsoleMatrixDrawer;
-import com.vulfcorp.impl.NormalMatrix;
-import com.vulfcorp.impl.SparseMatrix;
-import com.vulfcorp.impl.UIMatrixDrawer;
+import com.vulfcorp.impl.drawers.ConsoleMatrixDrawer;
+import com.vulfcorp.impl.matrixs.NormalMatrix;
+import com.vulfcorp.impl.matrixs.SparseMatrix;
+import com.vulfcorp.impl.drawers.UIMatrixDrawer;
 import com.vulfcorp.interfaces.IMatrix;
 import com.vulfcorp.interfaces.IMatrixViewer;
 import com.vulfcorp.managers.CommandManager;
@@ -135,6 +135,14 @@ public class HomeController implements IMatrixViewer {
                 CommandManager.getInstance().undo();
             }
         });
+        // remember first state of the controller
+        new MyCommand(thisController, matrix, borderCheckBox.isSelected()){
+            @Override
+            public void execute() {
+                setDataInController();
+            }
+        };
+        setViewInUI();
     }
 
     private void setViewInUI(){
@@ -179,7 +187,10 @@ public class HomeController implements IMatrixViewer {
         public MyCommand(HomeController controller, MatrixDecorator decorator, boolean isBorderNeed) {
             this.controller = controller;
             this.isBorderNeed = isBorderNeed;
-            this.internalDecorator = (MatrixDecorator)decorator.getCopy(); // return IMatrix (MatrixDecorator inside)
+            if(decorator != null)
+                this.internalDecorator = (MatrixDecorator)decorator.getCopy(); // return IMatrix (MatrixDecorator inside)
+            else
+                this.internalDecorator = null;
         }
 
         public void setDataInController(){

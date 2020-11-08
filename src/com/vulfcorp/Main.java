@@ -19,7 +19,7 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception{
         Parent root = FXMLLoader.load(getClass().getResource("resources/home.fxml"));
         primaryStage.setTitle("Matrix Generator");
-        primaryStage.setScene(new Scene(root, 1060, 720));
+        primaryStage.setScene(new Scene(root, 1020, 720));
         primaryStage.show();
     }
 

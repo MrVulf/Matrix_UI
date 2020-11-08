@@ -7,9 +7,9 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1030.0" style="-fx-background-color: #5499a1;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.vulfcorp.controllers.HomeController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1020.0" style="-fx-background-color: #5499a1;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.vulfcorp.controllers.HomeController">
    <children>
-      <Pane prefHeight="139.0" prefWidth="1030.0" style="-fx-background-color: #1f3a3d;">
+      <Pane prefHeight="140.0" prefWidth="1020.0" style="-fx-background-color: #1f3a3d;">
          <children>
             <Label alignment="TOP_CENTER" contentDisplay="TOP" layoutX="270.0" layoutY="41.0" text="MATRIX GENERATOR" textFill="WHITE">
                <font>
@@ -18,14 +18,9 @@
             </Label>
          </children>
       </Pane>
-      <Pane layoutY="139.0" prefHeight="581.0" prefWidth="360.0" style="-fx-background-color: #3f888f;">
+      <Pane layoutY="140.0" prefHeight="580.0" prefWidth="360.0" style="-fx-background-color: #3f888f;">
          <children>
-            <Button fx:id="sparseMatrixButton" layoutX="13.0" layoutY="31.0" mnemonicParsing="false" prefHeight="74.0" prefWidth="298.0" text="Generate Sparse Matrix">
-               <font>
-                  <Font name="Arial" size="20.0" />
-               </font>
-            </Button>
-            <Button fx:id="normalMatrixButton" layoutX="13.0" layoutY="176.0" mnemonicParsing="false" prefHeight="74.0" prefWidth="298.0" text="Generate Normal Matrix">
+            <Button fx:id="sparseMatrixButton" layoutX="13.0" layoutY="161.0" mnemonicParsing="false" prefHeight="74.0" prefWidth="298.0" text="Generate Sparse Matrix">
                <font>
                   <Font name="Arial" size="20.0" />
                </font>
@@ -45,16 +40,26 @@
                   <Font name="Arial" size="20.0" />
                </font>
             </Button>
+            <Button fx:id="normalMatrixButton" layoutX="13.0" layoutY="41.0" mnemonicParsing="false" prefHeight="74.0" prefWidth="298.0" text="Generate Normal Matrix">
+               <font>
+                  <Font name="Arial" size="20.0" />
+               </font>
+            </Button>
          </children>
       </Pane>
-      <TextArea fx:id="consoleTextArea" editable="false" layoutX="531.0" layoutY="230.0" prefHeight="400.0" prefWidth="400.0">
+      <TextArea fx:id="consoleTextArea" editable="false" layoutX="460.0" layoutY="230.0" prefHeight="400.0" prefWidth="400.0">
          <font>
             <Font name="Arial" size="30.0" />
          </font></TextArea>
-      <Label layoutX="624.0" layoutY="164.0" text="Console out" textFill="WHITE">
+      <Label layoutX="553.0" layoutY="165.0" text="Console out" textFill="WHITE">
          <font>
             <Font name="Arial" size="40.0" />
          </font>
       </Label>
+      <Button fx:id="undoButton" layoutX="903.0" layoutY="165.0" mnemonicParsing="false" prefHeight="58.0" prefWidth="97.0" text="Undo" textFill="#fc0808">
+         <font>
+            <Font name="Arial" size="20.0" />
+         </font>
+      </Button>
    </children>
 </Pane>

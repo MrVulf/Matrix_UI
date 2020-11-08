@@ -22,9 +22,13 @@ public class CommandManager {
     }
 
     public void undo(){
-        commandList.remove(commandList.size()-1);
-        for(ICommand command : commandList){
-            command.execute();
+        if(commandList.size()!=0) {
+            commandList.remove(commandList.size() - 1);
+            System.out.println("BEGIN UNDO MECHANISM");
+            for (ICommand command : commandList) {
+                command.execute();
+            }
+            System.out.println("END UNDO MECHANISM");
         }
     }
 }

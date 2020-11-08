@@ -4,11 +4,11 @@ import com.vulfcorp.interfaces.ICommand;
 import com.vulfcorp.managers.CommandManager;
 
 public abstract class AbstractCommand implements ICommand {
-    @Override
-    public void execute() {
+
+    public AbstractCommand(){
         CommandManager.getInstance().register(this);
-        doExecute();
     }
 
-    protected abstract void doExecute();
+    @Override
+    public abstract void execute();
 }

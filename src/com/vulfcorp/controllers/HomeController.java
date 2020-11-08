@@ -8,6 +8,7 @@ import com.vulfcorp.impl.SparseMatrix;
 import com.vulfcorp.impl.UIMatrixDrawer;
 import com.vulfcorp.interfaces.IMatrix;
 import com.vulfcorp.interfaces.IMatrixViewer;
+import com.vulfcorp.managers.CommandManager;
 import com.vulfcorp.tools.InitiatorMatrix;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -33,6 +34,9 @@ public class HomeController implements IMatrixViewer {
     @FXML
     private Button redecorateToDefaultButton;
 
+    @FXML
+    private Button undoButton;
+
     private final HomeController thisController = this;
 
     private MatrixDecorator matrix;
@@ -43,19 +47,13 @@ public class HomeController implements IMatrixViewer {
             @Override
             public void handle(MouseEvent mouseEvent) {
                 IMatrix nMatrix = InitiatorMatrix.FillMatrix(new NormalMatrix(5,5),15,10);
-                MyCommand command = new MyCommand(thisController, new MatrixDecorator(nMatrix)){
+                MyCommand command = new MyCommand(thisController, new MatrixDecorator(nMatrix), borderCheckBox.isSelected()){
                     @Override
-                    protected void doExecute() {
-                        controller.matrix = internalDecorator;
-                        controller.setViewInUI();
+                    public void execute() {
+                        setDataInController();
                     }
                 };
-                command.doExecute();
-                /*
-                IMatrix nMatrix = InitiatorMatrix.FillMatrix(new NormalMatrix(5,5),15,10);
-                matrix = new MatrixDecorator(nMatrix);
-                setViewInUI();
-                */
+                command.execute();
             }
 
         });
@@ -64,19 +62,13 @@ public class HomeController implements IMatrixViewer {
             @Override
             public void handle(MouseEvent mouseEvent) {
                 IMatrix nMatrix = InitiatorMatrix.FillMatrix(new SparseMatrix(5,5),10,10);
-                MyCommand command = new MyCommand(thisController, new MatrixDecorator(nMatrix)){
+                MyCommand command = new MyCommand(thisController, new MatrixDecorator(nMatrix), borderCheckBox.isSelected()){
                     @Override
-                    protected void doExecute() {
-                        controller.matrix = internalDecorator;
-                        controller.setViewInUI();
+                    public void execute() {
+                        setDataInController();
                     }
                 };
-                command.doExecute();
-                /*
-                IMatrix nMatrix = InitiatorMatrix.FillMatrix(new SparseMatrix(5,5),10,10);
-                matrix = new MatrixDecorator(nMatrix);
-                setViewInUI();
-                 */
+                command.execute();
             }
 
         });
@@ -84,72 +76,41 @@ public class HomeController implements IMatrixViewer {
         renumberRowsAndColumnsButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>(){
             @Override
             public void handle(MouseEvent event) {
-                MyCommand command = new MyCommand(thisController,matrix){
+                MyCommand command = new MyCommand(thisController,matrix, borderCheckBox.isSelected()){
                     @Override
-                    protected void doExecute() {
-                        if (internalDecorator != null) {
-                            int columnCount = internalDecorator.getColumnCount();
-                            int lineCount = internalDecorator.getLineCount();
+                    public void execute() {
+                        if (getInternalDecorator() != null) {
+                            int columnCount = getInternalDecorator().getColumnCount();
+                            int lineCount = getInternalDecorator().getLineCount();
 
                             int column1 = (int) (Math.random() * (columnCount));
                             int column2 = (int) (Math.random() * (columnCount));
                             int line1 = (int) (Math.random() * (lineCount));
                             int line2 = (int) (Math.random() * (lineCount));
 
-                            internalDecorator.swapLines(line1, line2);
-                            internalDecorator.swapColumn(column1, column2);
+                            getInternalDecorator().swapLines(line1, line2);
+                            getInternalDecorator().swapColumn(column1, column2);
 
-                            ShowAlert("RENUMBER EVENT", "swap columns (" + column1 + "," + column2 +
-                                    "), rows (" + line1 + "," + line2 + ")");
-                            controller.matrix=internalDecorator;
-                            controller.setViewInUI();
-                        } else{
-                            ShowAlert("MATRIX EVENT", "MATRIX WASN'T GENERATED");
+                            setDataInController();
                         }
 
                     }
                 };
-                command.doExecute();
-                /*
-                if (matrix != null) {
-                    int columnCount = matrix.getColumnCount();
-                    int lineCount = matrix.getLineCount();
-
-                    int column1 = (int) (Math.random() * (columnCount));
-                    int column2 = (int) (Math.random() * (columnCount));
-                    int line1 = (int) (Math.random() * (lineCount));
-                    int line2 = (int) (Math.random() * (lineCount));
-
-                    matrix.swapLines(line1, line2);
-                    matrix.swapColumn(column1, column2);
-
-                    ShowAlert("RENUMBER EVENT", "swap columns (" + column1 + "," + column2 +
-                            "), rows (" + line1 + "," + line2 + ")");
-
-                    setViewInUI();
-                } else{
-                    ShowAlert("MATRIX EVENT", "MATRIX WASN'T GENERATED");
-                }
-                */
+                command.execute();
             }
         });
 
         redecorateToDefaultButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>(){
             @Override
             public void handle(MouseEvent event) {
-                MyCommand command = new MyCommand(thisController, matrix){
+                MyCommand command = new MyCommand(thisController, matrix, borderCheckBox.isSelected()){
                     @Override
-                    protected void doExecute() {
-                        internalDecorator.decorateByDefault();
-                        controller.matrix=internalDecorator;
-                        controller.setViewInUI();
+                    public void execute() {
+                        getInternalDecorator().decorateByDefault();
+                        setDataInController();
                     }
                 };
-                command.doExecute();
-                /*
-                matrix.decorateByDefault();
-                setViewInUI();
-                */
+                command.execute();
             }
         });
 
@@ -158,17 +119,22 @@ public class HomeController implements IMatrixViewer {
         borderCheckBox.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                MyCommand command = new MyCommand(thisController, matrix){
+                MyCommand command = new MyCommand(thisController, matrix, borderCheckBox.isSelected()){
                     @Override
-                    protected void doExecute() {
-                        controller.setViewInUI();
+                    public void execute() {
+                        setDataInController();
                     }
                 };
-                command.doExecute();
-                //setViewInUI();
+                command.execute();
             }
         });
 
+        undoButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                CommandManager.getInstance().undo();
+            }
+        });
     }
 
     private void setViewInUI(){
@@ -206,16 +172,24 @@ public class HomeController implements IMatrixViewer {
     }
 
     private abstract static class MyCommand extends AbstractCommand {
-        protected HomeController controller;
-        protected MatrixDecorator internalDecorator;
+        private final HomeController controller;
+        private final MatrixDecorator internalDecorator;
+        private final boolean isBorderNeed;
 
-        public MyCommand(HomeController controller, MatrixDecorator decorator) {
+        public MyCommand(HomeController controller, MatrixDecorator decorator, boolean isBorderNeed) {
             this.controller = controller;
+            this.isBorderNeed = isBorderNeed;
             this.internalDecorator = (MatrixDecorator)decorator.getCopy(); // return IMatrix (MatrixDecorator inside)
         }
 
-        @Override
-        protected abstract void doExecute();
+        public void setDataInController(){
+            controller.matrix=internalDecorator;
+            controller.borderCheckBox.setSelected(isBorderNeed);
+            controller.setViewInUI();
+        }
+        protected MatrixDecorator getInternalDecorator(){
+            return internalDecorator;
+        }
     }
 }
 

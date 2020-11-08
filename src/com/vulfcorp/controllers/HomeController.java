@@ -1,5 +1,6 @@
 package com.vulfcorp.controllers;
 
+import com.vulfcorp.abstracts.AbstractCommand;
 import com.vulfcorp.decorators.MatrixDecorator;
 import com.vulfcorp.impl.ConsoleMatrixDrawer;
 import com.vulfcorp.impl.NormalMatrix;
@@ -32,8 +33,7 @@ public class HomeController implements IMatrixViewer {
     @FXML
     private Button redecorateToDefaultButton;
 
-
-    private HomeController thisController = this;
+    private final HomeController thisController = this;
 
     private MatrixDecorator matrix;
 
@@ -43,8 +43,19 @@ public class HomeController implements IMatrixViewer {
             @Override
             public void handle(MouseEvent mouseEvent) {
                 IMatrix nMatrix = InitiatorMatrix.FillMatrix(new NormalMatrix(5,5),15,10);
+                MyCommand command = new MyCommand(thisController, new MatrixDecorator(nMatrix)){
+                    @Override
+                    protected void doExecute() {
+                        controller.matrix = internalDecorator;
+                        controller.setViewInUI();
+                    }
+                };
+                command.doExecute();
+                /*
+                IMatrix nMatrix = InitiatorMatrix.FillMatrix(new NormalMatrix(5,5),15,10);
                 matrix = new MatrixDecorator(nMatrix);
                 setViewInUI();
+                */
             }
 
         });
@@ -53,8 +64,19 @@ public class HomeController implements IMatrixViewer {
             @Override
             public void handle(MouseEvent mouseEvent) {
                 IMatrix nMatrix = InitiatorMatrix.FillMatrix(new SparseMatrix(5,5),10,10);
+                MyCommand command = new MyCommand(thisController, new MatrixDecorator(nMatrix)){
+                    @Override
+                    protected void doExecute() {
+                        controller.matrix = internalDecorator;
+                        controller.setViewInUI();
+                    }
+                };
+                command.doExecute();
+                /*
+                IMatrix nMatrix = InitiatorMatrix.FillMatrix(new SparseMatrix(5,5),10,10);
                 matrix = new MatrixDecorator(nMatrix);
                 setViewInUI();
+                 */
             }
 
         });
@@ -62,6 +84,33 @@ public class HomeController implements IMatrixViewer {
         renumberRowsAndColumnsButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>(){
             @Override
             public void handle(MouseEvent event) {
+                MyCommand command = new MyCommand(thisController,matrix){
+                    @Override
+                    protected void doExecute() {
+                        if (internalDecorator != null) {
+                            int columnCount = internalDecorator.getColumnCount();
+                            int lineCount = internalDecorator.getLineCount();
+
+                            int column1 = (int) (Math.random() * (columnCount));
+                            int column2 = (int) (Math.random() * (columnCount));
+                            int line1 = (int) (Math.random() * (lineCount));
+                            int line2 = (int) (Math.random() * (lineCount));
+
+                            internalDecorator.swapLines(line1, line2);
+                            internalDecorator.swapColumn(column1, column2);
+
+                            ShowAlert("RENUMBER EVENT", "swap columns (" + column1 + "," + column2 +
+                                    "), rows (" + line1 + "," + line2 + ")");
+                            controller.matrix=internalDecorator;
+                            controller.setViewInUI();
+                        } else{
+                            ShowAlert("MATRIX EVENT", "MATRIX WASN'T GENERATED");
+                        }
+
+                    }
+                };
+                command.doExecute();
+                /*
                 if (matrix != null) {
                     int columnCount = matrix.getColumnCount();
                     int lineCount = matrix.getLineCount();
@@ -81,14 +130,26 @@ public class HomeController implements IMatrixViewer {
                 } else{
                     ShowAlert("MATRIX EVENT", "MATRIX WASN'T GENERATED");
                 }
+                */
             }
         });
 
         redecorateToDefaultButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>(){
             @Override
             public void handle(MouseEvent event) {
+                MyCommand command = new MyCommand(thisController, matrix){
+                    @Override
+                    protected void doExecute() {
+                        internalDecorator.decorateByDefault();
+                        controller.matrix=internalDecorator;
+                        controller.setViewInUI();
+                    }
+                };
+                command.doExecute();
+                /*
                 matrix.decorateByDefault();
                 setViewInUI();
+                */
             }
         });
 
@@ -97,7 +158,14 @@ public class HomeController implements IMatrixViewer {
         borderCheckBox.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                setViewInUI();
+                MyCommand command = new MyCommand(thisController, matrix){
+                    @Override
+                    protected void doExecute() {
+                        controller.setViewInUI();
+                    }
+                };
+                command.doExecute();
+                //setViewInUI();
             }
         });
 
@@ -135,6 +203,19 @@ public class HomeController implements IMatrixViewer {
     public void viewMatrix(String matrixView) {
         consoleTextArea.clear();
         consoleTextArea.appendText(matrixView);
+    }
+
+    private abstract static class MyCommand extends AbstractCommand {
+        protected HomeController controller;
+        protected MatrixDecorator internalDecorator;
+
+        public MyCommand(HomeController controller, MatrixDecorator decorator) {
+            this.controller = controller;
+            this.internalDecorator = (MatrixDecorator)decorator.getCopy(); // return IMatrix (MatrixDecorator inside)
+        }
+
+        @Override
+        protected abstract void doExecute();
     }
 }
 

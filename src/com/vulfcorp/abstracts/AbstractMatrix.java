@@ -67,4 +67,19 @@ public abstract class AbstractMatrix implements IMatrix {
         }
         return builder.toString();
     }
+
+    @Override
+    public IMatrix getCopy() {
+        return new MatrixCopy(matrix, lineCount, columnCount);
+    }
+
+    private static class MatrixCopy extends AbstractMatrix{
+        public MatrixCopy(IVector[] extMatrix, int rowCount, int columnCount){
+            IVector[] matrixCopy = new IVector[extMatrix.length];
+            for (int i = 0; i < rowCount; i++) {
+                matrixCopy[i] = (extMatrix[i]).getCopy();
+            }
+            fillField(matrixCopy, rowCount, columnCount);
+        }
+    }
 }

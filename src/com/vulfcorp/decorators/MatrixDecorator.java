@@ -18,6 +18,19 @@ public class MatrixDecorator implements IMatrix {
         decorateByDefault();
     }
 
+    // for getCopy()
+    private MatrixDecorator(IMatrix component, Map<Integer, Integer> linesMap, Map<Integer, Integer> columnsMap) {
+        this.component = component.getCopy();
+
+        Map<Integer,Integer> interRowsMap = new HashMap();
+        interRowsMap.putAll(linesMap);
+        Map<Integer,Integer> interColumnsMap = new HashMap();
+        interColumnsMap.putAll(columnsMap);
+
+        this.linesMap = interRowsMap;
+        this.columnsMap = interColumnsMap;
+    }
+
     public void decorateByDefault(){
         for(int i = 0; i < component.getLineCount(); i++){
             linesMap.put(i,i);
@@ -86,6 +99,11 @@ public class MatrixDecorator implements IMatrix {
     @Override
     public void draw(IMatrixDrawer drawer) {
         drawer.drawMatrix(this);
+    }
+
+    @Override
+    public IMatrix getCopy() {
+        return new MatrixDecorator(component, linesMap, columnsMap);
     }
 
 }

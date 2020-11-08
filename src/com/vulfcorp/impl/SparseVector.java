@@ -19,6 +19,21 @@ public class SparseVector implements IVector {
         }
     }
 
+    // for getCopy()
+    private SparseVector(Map<Integer, Integer> vector, int size) {
+        Map<Integer,Integer> copyVector = new HashMap<>();
+        copyVector.putAll(vector);
+        /*
+        for(Integer key : vector.keySet()){
+            copyVector.put(key, vector.get(key));
+
+        }
+        vector.
+         */
+        this.vector = copyVector;
+        this.size = size;
+    }
+
     @Override
     public void writeRecord(int position, int number) {
         if(number == 0 && 0 <= position && position < size)
@@ -56,6 +71,11 @@ public class SparseVector implements IVector {
     }
 
     @Override
+    public IVector getCopy() {
+        return new SparseVector(vector, size);
+    }
+
+    @Override
     public String toString() {
         StringBuilder builder= new StringBuilder("{");
         for(int i = 0; i < size; i++) {
@@ -75,8 +95,5 @@ public class SparseVector implements IVector {
         else
             return false;
     }
-
-
-
 
 }

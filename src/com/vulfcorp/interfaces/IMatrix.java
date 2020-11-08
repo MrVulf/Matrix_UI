@@ -53,4 +53,5 @@ public interface IMatrix {
             }
         };
     }
+    IMatrix getCopy();
 }

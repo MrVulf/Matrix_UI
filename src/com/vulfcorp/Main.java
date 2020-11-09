@@ -4,6 +4,8 @@ import com.vulfcorp.decorators.MatrixDecorator;
 import com.vulfcorp.impl.drawers.ConsoleMatrixDrawer;
 import com.vulfcorp.impl.matrixs.NormalMatrix;
 import com.vulfcorp.impl.matrixs.SparseMatrix;
+import com.vulfcorp.interfaces.IMatrixInternalIterator;
+import com.vulfcorp.interfaces.IMatrix;
 import com.vulfcorp.tools.InitiatorMatrix;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -29,6 +31,7 @@ public class Main extends Application {
         //testDrawMatrixInConsole();
         //testMatrixDecorator();
         //testMatrixIterator();
+        //testInternalIterator();
     }
 
     private static void testDrawMatrixInConsole(){
@@ -73,5 +76,35 @@ public class Main extends Application {
         System.out.println(iterator1.hasNext() + " || " + iterator1.next() +"\n");
         System.out.println(iterator2.hasNext() + " || " + iterator2.next() +"\n");
         System.out.println("finish test");
+    }
+
+    private static void testInternalIterator(){
+        NormalMatrix normalMatrix = new NormalMatrix(5, 5);
+        InitiatorMatrix.FillMatrix(normalMatrix, 15, 99);
+        System.out.println("Normal:");
+        normalMatrix.draw(ConsoleMatrixDrawer.getDrawerWithBorder());
+
+        normalMatrix.each(new IMatrixInternalIterator() {
+            @Override
+            public void iterate(IMatrix m, int row, int col) {
+                m.writeRecord(row,col,0);
+            }
+        });
+        normalMatrix.draw(ConsoleMatrixDrawer.getDrawerWithBorder());
+
+        System.out.println("Decorator");
+        SparseMatrix sparseMatrix = new SparseMatrix(5,5);
+        InitiatorMatrix.FillMatrix(sparseMatrix, 10, 99);
+        MatrixDecorator sparseDecorator = new MatrixDecorator(sparseMatrix);
+        sparseDecorator.draw(ConsoleMatrixDrawer.getDrawerWithoutBorder());
+        sparseDecorator.each(new IMatrixInternalIterator() {
+            @Override
+            public void iterate(IMatrix m, int row, int col) {
+                m.writeRecord(row,col,0);
+            }
+        });
+        sparseDecorator.draw(ConsoleMatrixDrawer.getDrawerWithoutBorder());
+
+
     }
 }

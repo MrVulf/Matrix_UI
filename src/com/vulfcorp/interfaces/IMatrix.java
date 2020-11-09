@@ -53,5 +53,11 @@ public interface IMatrix {
             }
         };
     }
+    default void each(IMatrixInternalIterator iterator){
+        for(int row = 0; row < getLineCount(); row++)
+            for(int column = 0; column < getColumnCount(); column++){
+                iterator.iterate(this, column, row);
+            }
+    }
     IMatrix getCopy();
 }

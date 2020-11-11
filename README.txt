@@ -29,7 +29,7 @@ The strategy of filling in the matrix:
             {* ? 0 ?}       {* ? * ? *}
             {0 ? 0 ?}       {* ? 0 ? 0}
 
-The matrix is rendered in HomeController.
+The matrix is rendered in HomeController:
 To do this, the button handlers have an algorithm:
     1) Create a matrix (of the correct type)
     2) Initializing the matrix using the InitiatorMatrix
@@ -39,3 +39,21 @@ To do this, the button handlers have an algorithm:
         b) Calling the draw method for the matrix (passing the IMatrixDrawer object)
         c) Delegating the matrix display to the IMatrixDrawer object
         d) Executing the redefined drawing method
+
+The project has the ability do "Undo" command - removing the last action:
+The mechanism's structure:
+    1) ICommand interface
+    2) AbstractCommand class
+    3) MyCommand - the HomeController's internal class
+    4) CommandManager - the singleton entity for collection action
+How it use:
+    1) An user should made his class and extends it from AbstractCommand
+    2) The user's class overrides the "doExecute" method.
+    3) The user makes instance and call method "execute".
+How it work:
+    1) CommandManager collects commands:
+        AbstractCommand provides final method "execute" ->
+        Inside, it takes CommandManager state and registers the command if it possible.
+    2) When an user calls CommandManager.undo():
+        The manager removes the last command and
+            repeats all actions from the list starting from the first one

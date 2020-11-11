@@ -5,7 +5,7 @@ import com.vulfcorp.managers.CommandManager;
 
 public abstract class AbstractCommand implements ICommand {
     @Override
-    public void execute(){
+    public final void execute(){
         if(!CommandManager.getInstance().geUndoState()) {
             CommandManager.getInstance().register(this);
         }

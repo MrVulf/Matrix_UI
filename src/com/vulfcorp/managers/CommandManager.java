@@ -13,15 +13,21 @@ public class CommandManager {
         return instance;
     }
 
-    private List<ICommand> commandList = new LinkedList<ICommand>();
+    private final List<ICommand> commandList = new LinkedList<>();
+    private boolean isInUndoState = false;
 
     private CommandManager() {}
+
+    public boolean geUndoState(){
+        return isInUndoState;
+    }
 
     public void register(ICommand command){
         commandList.add(command);
     }
 
     public void undo(){
+        isInUndoState = true;
         if(commandList.size()!=0) {
             commandList.remove(commandList.size() - 1);
             System.out.println("BEGIN UNDO MECHANISM");
@@ -30,5 +36,6 @@ public class CommandManager {
             }
             System.out.println("END UNDO MECHANISM");
         }
+        isInUndoState = false;
     }
 }

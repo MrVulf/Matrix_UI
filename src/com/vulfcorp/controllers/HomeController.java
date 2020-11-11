@@ -49,7 +49,7 @@ public class HomeController implements IMatrixViewer {
                 IMatrix nMatrix = InitiatorMatrix.FillMatrix(new NormalMatrix(5,5),15,10);
                 MyCommand command = new MyCommand(thisController, new MatrixDecorator(nMatrix), borderCheckBox.isSelected()){
                     @Override
-                    public void execute() {
+                    public void doExecute() {
                         setDataInController();
                     }
                 };
@@ -64,7 +64,7 @@ public class HomeController implements IMatrixViewer {
                 IMatrix nMatrix = InitiatorMatrix.FillMatrix(new SparseMatrix(5,5),10,10);
                 MyCommand command = new MyCommand(thisController, new MatrixDecorator(nMatrix), borderCheckBox.isSelected()){
                     @Override
-                    public void execute() {
+                    public void doExecute() {
                         setDataInController();
                     }
                 };
@@ -78,7 +78,7 @@ public class HomeController implements IMatrixViewer {
             public void handle(MouseEvent event) {
                 MyCommand command = new MyCommand(thisController,matrix, borderCheckBox.isSelected()){
                     @Override
-                    public void execute() {
+                    public void doExecute() {
                         if (getInternalDecorator() != null) {
                             int columnCount = getInternalDecorator().getColumnCount();
                             int lineCount = getInternalDecorator().getLineCount();
@@ -105,7 +105,7 @@ public class HomeController implements IMatrixViewer {
             public void handle(MouseEvent event) {
                 MyCommand command = new MyCommand(thisController, matrix, borderCheckBox.isSelected()){
                     @Override
-                    public void execute() {
+                    public void doExecute() {
                         getInternalDecorator().decorateByDefault();
                         setDataInController();
                     }
@@ -121,7 +121,7 @@ public class HomeController implements IMatrixViewer {
             public void handle(MouseEvent event) {
                 MyCommand command = new MyCommand(thisController, matrix, borderCheckBox.isSelected()){
                     @Override
-                    public void execute() {
+                    public void doExecute() {
                         setDataInController();
                     }
                 };
@@ -135,14 +135,16 @@ public class HomeController implements IMatrixViewer {
                 CommandManager.getInstance().undo();
             }
         });
+
         // remember first state of the controller
         new MyCommand(thisController, matrix, borderCheckBox.isSelected()){
             @Override
-            public void execute() {
+            public void doExecute() {
                 setDataInController();
             }
-        };
-        setViewInUI();
+        }.execute();
+
+
     }
 
     private void setViewInUI(){
@@ -198,6 +200,7 @@ public class HomeController implements IMatrixViewer {
             controller.borderCheckBox.setSelected(isBorderNeed);
             controller.setViewInUI();
         }
+
         protected MatrixDecorator getInternalDecorator(){
             return internalDecorator;
         }
